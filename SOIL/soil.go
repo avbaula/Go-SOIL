@@ -47,8 +47,8 @@ func Load_OGL_cubmap(x_pos_file, x_nerg_file string,
 	y_pos_file, y_nerg_file string,
 	z_pos_file, z_neg_file string,
 	force_channels int32,
-	reuse_texture_ID uint,
-	flags uint) uint {
+	reuse_texture_ID uint32,
+	flags uint32) uint {
 	return uint(C.SOIL_load_OGL_cubemap(C.CString(x_pos_file), C.CString(x_nerg_file),
 		C.CString(y_pos_file), C.CString(y_nerg_file),
 		C.CString(z_pos_file), C.CString(z_neg_file),
@@ -60,11 +60,8 @@ func Load_OGL_cubmap(x_pos_file, x_nerg_file string,
 func Load_OGL_single_cubmap(filename string,
 	face_order [6]string,
 	force_channels int32,
-	reuse_texture_ID uint,
-	flags uint) uint {
-	if len(face_order) == 0 {
-		panic("Invalid param face_order:  the order of the faces in the file, any combination of NSWEUD, for North, South, Up, etc.")
-	}
+	reuse_texture_ID uint32,
+	flags uint32) uint {
 	return uint(C.SOIL_load_OGL_single_cubemap(C.CString(filename),
 		C.CString(face_order[0]),
 		C.int(force_channels),
@@ -75,8 +72,8 @@ func Load_OGL_single_cubmap(filename string,
 func Load_OGL_HDR_texture(filename string,
 	fake_HDR_format int32,
 	rescale_to_max int32,
-	reuse_texture_ID uint,
-	flags uint) uint {
+	reuse_texture_ID uint32,
+	flags uint32) uint {
 	return uint(C.SOIL_load_OGL_HDR_texture(C.CString(filename),
 		C.int(fake_HDR_format),
 		C.int(rescale_to_max),
@@ -87,8 +84,8 @@ func Load_OGL_HDR_texture(filename string,
 func Load_OGL_texture_from_memory(buffer *byte,
 	buffer_length int32,
 	force_channels int32,
-	reuse_texture_ID uint,
-	flags uint) uint {
+	reuse_texture_ID uint32,
+	flags uint32) uint {
 	return uint(C.SOIL_load_OGL_texture_from_memory((*C.uchar)(unsafe.Pointer(buffer)),
 		C.int(buffer_length),
 		C.int(force_channels),
@@ -103,8 +100,8 @@ func Load_OGL_cubmap_from_memory(x_pos_buffer *byte, x_pos_buffer_length int32,
 	z_pos_buffer *byte, z_pos_buffer_length int32,
 	z_neg_buffer *byte, z_neg_buffer_length int32,
 	force_channels int32,
-	reuse_texture_ID uint,
-	flags uint) uint {
+	reuse_texture_ID uint32,
+	flags uint32) uint {
 	return uint(C.SOIL_load_OGL_cubemap_from_memory((*C.uchar)(unsafe.Pointer(x_pos_buffer)), C.int(x_pos_buffer_length),
 		(*C.uchar)(unsafe.Pointer(x_neg_buffer)), C.int(x_neg_buffer_length),
 		(*C.uchar)(unsafe.Pointer(y_pos_buffer)), C.int(y_pos_buffer_length),
@@ -120,8 +117,8 @@ func Load_OGL_single_cubemap_from_memory(buffer *byte,
 	buffer_length int32,
 	face_order [6]string,
 	force_channels int32,
-	reuse_texture_ID uint,
-	flags uint) uint {
+	reuse_texture_ID uint32,
+	flags uint32) uint {
 	return uint(C.SOIL_load_OGL_single_cubemap_from_memory((*C.uchar)(unsafe.Pointer(buffer)),
 		C.int(buffer_length),
 		C.CString(face_order[0]),
@@ -131,8 +128,8 @@ func Load_OGL_single_cubemap_from_memory(buffer *byte,
 }
 
 func Create_OGL_texture(data *byte, width int32, height int32, channels int32,
-	reuse_texture_ID uint8,
-	flags uint8) uint {
+	reuse_texture_ID uint32,
+	flags uint32) uint {
 	return uint(C.SOIL_create_OGL_texture((*C.uchar)(unsafe.Pointer(data)),
 		C.int(width),
 		C.int(height),
@@ -143,8 +140,8 @@ func Create_OGL_single_cubemap(data *byte,
 	width int32, height int32,
 	channels int32,
 	face_order [6]string,
-	reuse_texture_ID uint,
-	flags uint) uint {
+	reuse_texture_ID uint32,
+	flags uint32) uint {
 	return uint(C.SOIL_create_OGL_single_cubemap((*C.uchar)(unsafe.Pointer(data)),
 		C.int(width),
 		C.int(height),
