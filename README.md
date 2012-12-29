@@ -1,6 +1,6 @@
 Go-SOIL
 ======
-Go bindings for libSOIL
+Go bindings for SOIL(Simple OpenGL Image Library)
 
 Installation
 ------------
