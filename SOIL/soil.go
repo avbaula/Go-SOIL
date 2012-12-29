@@ -31,13 +31,15 @@ const (
 	HDR_RGBE               = C.SOIL_HDR_RGBE
 	HDR_RGBdivA            = C.SOIL_HDR_RGBdivA
 	HDR_RGBdivA2           = C.SOIL_HDR_RGBdivA2
+	DDS_CUBEMAP_FACE_ORDER = C.SOIL_DDS_CUBEMAP_FACE_ORDER
 )
 
 func Load_OGL_texture(filename string,
 	force_channels int32,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_load_OGL_texture(C.CString(filename),
+	return uint(C.SOIL_load_OGL_texture(
+		C.CString(filename),
 		C.int(force_channels),
 		C.uint(reuse_texture_ID),
 		C.uint(flags)))
@@ -49,7 +51,8 @@ func Load_OGL_cubmap(x_pos_file, x_nerg_file string,
 	force_channels int32,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_load_OGL_cubemap(C.CString(x_pos_file), C.CString(x_nerg_file),
+	return uint(C.SOIL_load_OGL_cubemap(
+		C.CString(x_pos_file), C.CString(x_nerg_file),
 		C.CString(y_pos_file), C.CString(y_nerg_file),
 		C.CString(z_pos_file), C.CString(z_neg_file),
 		C.int(force_channels),
@@ -58,12 +61,13 @@ func Load_OGL_cubmap(x_pos_file, x_nerg_file string,
 }
 
 func Load_OGL_single_cubmap(filename string,
-	face_order [6]string,
+	face_order string,
 	force_channels int32,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_load_OGL_single_cubemap(C.CString(filename),
-		C.CString(face_order[0]),
+	return uint(C.SOIL_load_OGL_single_cubemap(
+		C.CString(filename),
+		C.CString(face_order),
 		C.int(force_channels),
 		C.uint(reuse_texture_ID),
 		C.uint(flags)))
@@ -74,7 +78,8 @@ func Load_OGL_HDR_texture(filename string,
 	rescale_to_max int32,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_load_OGL_HDR_texture(C.CString(filename),
+	return uint(C.SOIL_load_OGL_HDR_texture(
+		C.CString(filename),
 		C.int(fake_HDR_format),
 		C.int(rescale_to_max),
 		C.uint(reuse_texture_ID),
@@ -86,14 +91,16 @@ func Load_OGL_texture_from_memory(buffer *byte,
 	force_channels int32,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_load_OGL_texture_from_memory((*C.uchar)(unsafe.Pointer(buffer)),
+	return uint(C.SOIL_load_OGL_texture_from_memory(
+		(*C.uchar)(unsafe.Pointer(buffer)),
 		C.int(buffer_length),
 		C.int(force_channels),
 		C.uint(reuse_texture_ID),
 		C.uint(flags)))
 }
 
-func Load_OGL_cubmap_from_memory(x_pos_buffer *byte, x_pos_buffer_length int32,
+func Load_OGL_cubmap_from_memory(
+	x_pos_buffer *byte, x_pos_buffer_length int32,
 	x_neg_buffer *byte, x_neg_buffer_length int32,
 	y_pos_buffer *byte, y_pos_buffer_length int32,
 	y_neg_buffer *byte, y_neg_buffer_length int32,
@@ -102,7 +109,8 @@ func Load_OGL_cubmap_from_memory(x_pos_buffer *byte, x_pos_buffer_length int32,
 	force_channels int32,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_load_OGL_cubemap_from_memory((*C.uchar)(unsafe.Pointer(x_pos_buffer)), C.int(x_pos_buffer_length),
+	return uint(C.SOIL_load_OGL_cubemap_from_memory(
+		(*C.uchar)(unsafe.Pointer(x_pos_buffer)), C.int(x_pos_buffer_length),
 		(*C.uchar)(unsafe.Pointer(x_neg_buffer)), C.int(x_neg_buffer_length),
 		(*C.uchar)(unsafe.Pointer(y_pos_buffer)), C.int(y_pos_buffer_length),
 		(*C.uchar)(unsafe.Pointer(y_neg_buffer)), C.int(y_neg_buffer_length),
@@ -119,7 +127,8 @@ func Load_OGL_single_cubemap_from_memory(buffer *byte,
 	force_channels int32,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_load_OGL_single_cubemap_from_memory((*C.uchar)(unsafe.Pointer(buffer)),
+	return uint(C.SOIL_load_OGL_single_cubemap_from_memory(
+		(*C.uchar)(unsafe.Pointer(buffer)),
 		C.int(buffer_length),
 		C.CString(face_order[0]),
 		C.int(force_channels),
@@ -130,7 +139,8 @@ func Load_OGL_single_cubemap_from_memory(buffer *byte,
 func Create_OGL_texture(data *byte, width int32, height int32, channels int32,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_create_OGL_texture((*C.uchar)(unsafe.Pointer(data)),
+	return uint(C.SOIL_create_OGL_texture(
+		(*C.uchar)(unsafe.Pointer(data)),
 		C.int(width),
 		C.int(height),
 		C.int(channels), C.uint(reuse_texture_ID), C.uint(flags)))
@@ -139,14 +149,15 @@ func Create_OGL_texture(data *byte, width int32, height int32, channels int32,
 func Create_OGL_single_cubemap(data *byte,
 	width int32, height int32,
 	channels int32,
-	face_order [6]string,
+	face_order string,
 	reuse_texture_ID uint32,
 	flags uint32) uint {
-	return uint(C.SOIL_create_OGL_single_cubemap((*C.uchar)(unsafe.Pointer(data)),
+	return uint(C.SOIL_create_OGL_single_cubemap(
+		(*C.uchar)(unsafe.Pointer(data)),
 		C.int(width),
 		C.int(height),
 		C.int(channels),
-		(*C.char)(unsafe.Pointer(&face_order[0])),
+		C.CString(face_order),
 		C.uint(reuse_texture_ID),
 		C.uint(flags)))
 }
@@ -155,7 +166,8 @@ func Save_screenshot(filename string,
 	image_type int32,
 	x int32, y int32,
 	width int32, height int32) int {
-	return int(C.SOIL_save_screenshot(C.CString(filename),
+	return int(C.SOIL_save_screenshot(
+		C.CString(filename),
 		C.int(image_type),
 		C.int(x), C.int(y),
 		C.int(width), C.int(height)))
@@ -164,7 +176,8 @@ func Save_screenshot(filename string,
 func Load_image(filename string,
 	width *int32, height *int32,
 	channels *int32, force_channels int32) *byte {
-	return (*byte)(C.SOIL_load_image(C.CString(filename),
+	return (*byte)(C.SOIL_load_image(
+		C.CString(filename),
 		(*C.int)(unsafe.Pointer(width)),
 		(*C.int)(unsafe.Pointer(height)),
 		(*C.int)(unsafe.Pointer(channels)),
@@ -174,7 +187,8 @@ func Load_image(filename string,
 func Load_image_from_memory(buffer *byte, buffer_length int32,
 	width *int32, height *int32,
 	channels *int32, force_channels int32) *byte {
-	return (*byte)(C.SOIL_load_image_from_memory((*C.uchar)(unsafe.Pointer(buffer)),
+	return (*byte)(C.SOIL_load_image_from_memory(
+		(*C.uchar)(unsafe.Pointer(buffer)),
 		C.int(buffer_length),
 		(*C.int)(unsafe.Pointer(width)),
 		(*C.int)(unsafe.Pointer(height)),
@@ -185,7 +199,8 @@ func Save_image(filename string,
 	image_type int32,
 	width int32, height int32,
 	channels int32, data *byte) int {
-	return int(C.SOIL_save_image(C.CString(filename),
+	return int(C.SOIL_save_image(
+		C.CString(filename),
 		C.int(image_type),
 		C.int(width),
 		C.int(height),
